@@ -28,8 +28,9 @@ class Supervisor(object):
         'AND h.network_id = n.node_id')
     # TODO(bluecmd): We should probably use an iterator here instead
     return self.cursor.execute(sql).fetchall()
-    
+
   def get_domain(self):
+    sql = ('SELECT name FROM network WHERE short_name = "LOCAL"')
     return self.cursor.execute(sql).fetchone()
     
     
