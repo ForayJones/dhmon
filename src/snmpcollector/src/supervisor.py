@@ -18,7 +18,7 @@ class Supervisor(object):
   message to the workers.
   """
   def __init__(self):
-    self.db = sqlite3.connect(config.get('ipplan'))
+    self.db = sqlite3.connect(str(config.get('ipplan')))
     self.cursor = self.db.cursor()
    
   def fetch_nodes(self):
