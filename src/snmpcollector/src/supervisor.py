@@ -30,7 +30,7 @@ class Supervisor(object):
     return self.cursor.execute(sql).fetchall()
 
   def get_domain(self):
-    sql = ('SELECT name FROM network WHERE short_name = "LOCAL"')
+    sql = ('SELECT n.name FROM network n WHERE n.short_name = "LOCAL"')
     return self.cursor.execute(sql).fetchone()
     
     
