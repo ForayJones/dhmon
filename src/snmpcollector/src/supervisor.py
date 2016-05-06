@@ -17,7 +17,7 @@ class Supervisor(object):
   targets that should be polled. Every device is then passed as a
   message to the workers.
   """
-  def __init__(self):
+  def open_db(self):
     self.db = sqlite3.connect(str(config.get('ipplan')))
     self.cursor = self.db.cursor()
    
@@ -49,7 +49,7 @@ class Supervisor(object):
 
   def do_trigger(self, run):
     timestamp = time.time()
-
+    self.open_db()
     targets = 0
     for host, target in self.construct_targets(timestamp):
       targets += 1
@@ -58,7 +58,7 @@ class Supervisor(object):
     # Record how many targets there are in this round to make it
     # possible to record pipeline latency
     yield actions.Summary(timestamp, targets)
-
+    self.db.close()
     logging.info('New work pushed')
 
 

@@ -19,7 +19,7 @@ snmp:
 """
 
 
-class TestSuportvisor(unittest.TestCase):
+class TestSupervisor(unittest.TestCase):
 
   def setUp(self):
     patcher = mock.patch('time.time')
@@ -28,14 +28,16 @@ class TestSuportvisor(unittest.TestCase):
     self.mock_time.return_value = 1234
 
   @mock.patch('supervisor.Supervisor.fetch_nodes')
+  @mock.patch('supervisor.Supervisor.get_domain')
   @mock.patch('config.Config.load')
-  def testHandleTrigger(self, mock_config, mock_fetch_nodes):
+  def testHandleTrigger(self, mock_config, mock_get_domain, mock_fetch_nodes):
     logic = supervisor.Supervisor()
+    mock_get_domain = ('EVENT.LOCAL',)
     mock_config.return_value = yaml.load(CONFIG)
     mock_fetch_nodes.return_value = [
-        ('test1', '1.2.3.4', 'access', 'EVENT@TESTNET1'),
-        ('testb', '1.2.3.4', 'access', 'OTHER@TESTNET1'),
-        ('test2', '1.2.3.5', 'access', 'EVENT@TESTNET2')]
+        ('test1', '1.2.3.4', 'access', 'TESTNET1.EVENT.LOCAL'),
+        ('testb', '1.2.3.4', 'access', 'TESTNET2.OTHER.LOCAL'),
+        ('test2', '1.2.3.5', 'access', 'TESTNET1.EVENT.LOCAL')]
     expected_debug = {}
 
     expected_output = [
