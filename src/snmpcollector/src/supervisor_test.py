@@ -32,7 +32,7 @@ class TestSupervisor(unittest.TestCase):
   @mock.patch('config.Config.load')
   def testHandleTrigger(self, mock_config, mock_get_domain, mock_fetch_nodes):
     logic = supervisor.Supervisor()
-    mock_get_domain = ('EVENT.LOCAL',)
+    mock_get_domain.return_value = ('EVENT.LOCAL',)
     mock_config.return_value = yaml.load(CONFIG)
     mock_fetch_nodes.return_value = [
         ('test1', '1.2.3.4', 'access', 'TESTNET1.EVENT.LOCAL'),
