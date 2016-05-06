@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/dhtech/dhmon.svg?branch=master)](https://travis-ci.org/dhtech/dhmon)
-[![Coverage Status](https://coveralls.io/repos/dhtech/dhmon/badge.svg?branch=master)](https://coveralls.io/r/dhtech/dhmon)
+[![Coverage Status](https://coveralls.io/repos/github/ForayJones/dhmon/badge.svg?branch=master)](https://coveralls.io/github/ForayJones/dhmon?branch=master)
 
 dhmon
 =====
