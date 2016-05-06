@@ -36,6 +36,7 @@ class Supervisor(object):
     
   def construct_targets(self, timestamp):
     nodes = {}
+    self.open_db()
     domain = self.get_domain()[0]
     for host, ip, layer, network in self.fetch_nodes():
       if re.search(domain + '$', network) == None:
@@ -46,10 +47,10 @@ class Supervisor(object):
             host, layer)
         continue
       yield host, snmp.SnmpTarget(host, ip, timestamp, layer, **layer_config)
+    self.db.close()
 
   def do_trigger(self, run):
     timestamp = time.time()
-    self.open_db()
     targets = 0
     for host, target in self.construct_targets(timestamp):
       targets += 1
@@ -58,7 +59,6 @@ class Supervisor(object):
     # Record how many targets there are in this round to make it
     # possible to record pipeline latency
     yield actions.Summary(timestamp, targets)
-    self.db.close()
     logging.info('New work pushed')
 
 
